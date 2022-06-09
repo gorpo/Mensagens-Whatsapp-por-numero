@@ -4,21 +4,17 @@ from selenium.webdriver.common.keys import Keys
 import os
 
 
-mensagem = """gabriela disse que vc é dramatica e chorona"""
+mensagem = """Sua mensagem em uma unica linha"""
 
 imagem = 'C:\\Paluch_Python\\dia_dos_pais.jpg'
-#contatos = ['5548991748931']
-contatos = [5548991547024]
+contatos = ['554899766001','554891454301' ]
 contador = 0
 mensagem_enviada = 0
 erro_mensagem = 0
-
-
-
 for i in contatos:
     try:
         cliente = contatos[contador]
-        contador = contador + 1
+        contador = contador +1
         dir_path = os.getcwd()
         profile = os.path.join(dir_path, "profile", "wpp")
         options = webdriver.ChromeOptions()
@@ -27,18 +23,14 @@ for i in contatos:
         driver.get(f'https://web.whatsapp.com/send?phone={cliente}&text&app_absent=1')
         time.sleep(5)
         #envia a imagem
-        #driver.find_element_by_css_selector("span[data-icon='clip']").click()
-        #attach = driver.find_element_by_css_selector("input[type='file']")
-        #attach.send_keys(imagem)
-        #time.sleep(2)
+        driver.find_element_by_css_selector("span[data-icon='clip']").click()
+        attach = driver.find_element_by_css_selector("input[type='file']")
+        attach.send_keys(imagem)
+        time.sleep(2)
         #envia o texto dentro do input de texto da imagem, para enviar somente texto pegar outro xpath
-
-        for i in range(200):
-            msg_box = driver.find_element_by_xpath('/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[2]')
-            msg_box.send_keys(mensagem, Keys.ENTER)
-            #time.sleep(2)
-
-
+        msg_box = driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/div[2]/div[2]/span/div[1]/span/div[1]/div/div[2]/div[1]/span/div/div[2]/div/div[3]/div[1]/div[2]')
+        msg_box.send_keys(mensagem, Keys.ENTER)
+        time.sleep(2)
         driver.stop_client()
         driver.close()
         mensagem_enviada = mensagem_enviada +1
@@ -49,3 +41,4 @@ for i in contatos:
 
 print(f'Mensagens Enviadas: {mensagem_enviada}')
 print(f'Mensagens com erro: {erro_mensagem}')
+
